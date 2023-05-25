@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_URL } = process.env;
 const axios = require("axios");
+require("pg");
 
 const sequelize = new Sequelize(DB_URL, {
   logging: false,
@@ -40,20 +41,20 @@ Type.belongsToMany(Pokemon, { through: "Pokemon_Type" });
 
 
 // lleno la tabla "Types"
-(async function () {
-  const TypesApi = await axios.get("https://pokeapi.co/api/v2/type");
-  const Types = TypesApi.data.results.map((el) => el.name);
-  const TypesEach = Types.map((el) => {
-    for (let i = 0; i < el.length; i++) {
-      return el;
-    }
-  });
-  TypesEach.forEach((el) => {
-    Type.findOrCreate({
-      where: { name: el },
-    });
-  });
-})();
+// (async function () {
+//   const TypesApi = await axios.get("https://pokeapi.co/api/v2/type");
+//   const Types = TypesApi.data.results.map((el) => el.name);
+//   const TypesEach = Types.map((el) => {
+//     for (let i = 0; i < el.length; i++) {
+//       return el;
+//     }
+//   });
+//   TypesEach.forEach((el) => {
+//     Type.findOrCreate({
+//       where: { name: el },
+//     });
+//   });
+// })();
 
 
 
